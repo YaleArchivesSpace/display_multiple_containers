@@ -4,9 +4,6 @@
 # Setuptools distribution folder.
 /dist/
 
-#screenshots for readme
-/screenshots/
-
 #pycache folder
 /__pycache__/
 

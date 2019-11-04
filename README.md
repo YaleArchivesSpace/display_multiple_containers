@@ -13,10 +13,14 @@ The plugin overrides behavior in three files:
 
 ## Examples
 
-![Less than 4](/screenshots/less_than_4.png)
+Display with less than four containers:
+
+![Less than 4](less_than_4.png)
 
 
-![More than 3](/screenshots/more_than_3.png)
+Display with more than three containers:
+
+![More than 3](more_than_3.png)
 
 ## Requirements
 
