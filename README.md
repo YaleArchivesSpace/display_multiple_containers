@@ -8,9 +8,19 @@ This plugin modifies the ArchivesSpace public user interface (PUI) so that if th
 
 The plugin overrides behavior in three files:
 * `public/locales/en.yml`: updates 'multiple_containers' enumeration to accept the number of containers as a parameter
-* `public/models/record.rb`: updates the `parse_container_display` function in the `Record` class. Moves the multiple containers return statement out of the instance loop to prevent the loop from stopping once the container count is greater than 1. Added a condition so that if the length of the container list is greater than 1 but less than 4 the function returns a string representation of the container titles. Added an elsif statement so that if the number of containers is 4 or more the function updates and returns the 'multiple_containers' locale with the number of containers.
+* `public/models/record.rb`: updates the `parse_container_display` function in the `Record` class. Moves the multiple containers return statement out of the instance loop to prevent the loop from stopping once the container count is greater than 1. Adds a condition so that if the length of the container list is greater than 1 but less than 4 the function returns a string representation of the container titles. Adds an `elsif` statement so that if the number of containers is 4 or more the function updates and returns the 'multiple_containers' locale with the number of containers.
 * `public/views/shared/_present_list.html.erb`: added a line so that the string representation of the container list for multiple containers (less than 4) will display properly - the file looks for a string and then does nothing, since no additional processing is needed as the list has already been converted to a string. This seems a little hacky but was the shortest and easiest way to do it.
 
-### Requirements
+## Examples
 
-* Only tested on ArchivesSpace v2.5.1
+Less than 4:
+
+![Less than 4](https://drive.google.com/open?id=1r4O8UMeBNjpYkH_QRTs3yp0VdisHvP_9)
+
+More than 3:
+
+![More than 3](https://drive.google.com/open?id=13N0fgjlKNPIbBwOSDc0BWtu4e9QSe2MY)
+
+## Requirements
+
+* Tested on ArchivesSpace 2.5.1 and 2.7.0
