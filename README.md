@@ -13,13 +13,10 @@ The plugin overrides behavior in three files:
 
 ## Examples
 
-Less than 4:
+![Less than 4](/screenshots/less_than_4.png)
 
-![Less than 4](https://drive.google.com/open?id=1r4O8UMeBNjpYkH_QRTs3yp0VdisHvP_9)
 
-More than 3:
-
-![More than 3](https://drive.google.com/open?id=13N0fgjlKNPIbBwOSDc0BWtu4e9QSe2MY)
+![More than 3](/screenshots/more_than_3.png)
 
 ## Requirements
 
