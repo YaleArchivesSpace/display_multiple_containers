@@ -31,7 +31,7 @@ file in addition to the container title list to make sure there are no side effe
        <li>
          <% if list_clss == 'subjects_list' && item['jsonmodel_type'].start_with?('agent_') %>
            <a href="<%= app_prefix(item['uri']) %>">
-             <%= item['title'] %>
+             <%= item['title'].gsub(/\$\w:\s/, '') %>
            </a>
            <% if item['_relator'] %>
              (<%= t("enumerations.linked_agent_archival_record_relators.#{item['_relator']}", :default => item['_relator'])  %>)
