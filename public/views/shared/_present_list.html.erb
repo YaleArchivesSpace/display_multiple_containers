@@ -1,57 +1,62 @@
-<!-- not sure if this is the best way - it seemed easier to convert the multiple containers
+<%# not sure if this is the best way - it seemed easier to convert the multiple containers
 to a string in the record override file and then just skip it here. Otherwise would have had
 to write in some special handling here.
 
 Need to check subject, deaccession, and external documents lists, which all depend on this
-file in addition to the container title list to make sure there are no side effects-->
-<% unless list.kind_of? String%>
-  <% if list.kind_of? Hash
+file in addition to the container title list to make sure there are no side effects %>
+  <% unless list.kind_of? String%>
+    <% if list.kind_of? Hash
      list.each do |k,v| %>
-     <h3><%= k %></h3>
-     <ul class="present_list <%= list_clss %>">
-     <% v.each do |item | %>
-       <li>
-       <% unless item['inherit'].blank? %>
-    <%= item['inherit'].html_safe %>
-       <% end %>
-       <% unless item['uri'].blank? %>
-       <a href="<%= app_prefix(item['uri']) %>">
-       <% end %>
-       <%= item['title'] %>
-       <% unless item['uri'].blank? %>
-       </a>
-       <% end %>
-       </li>
-     <% end %>
-     </ul>
+      <h3><%= k %></h3>
+      <ul class="present_list <%= list_clss %>">
+        <% v.each do |item | %>
+          <li>
+            <% unless item['inherit'].blank? %>
+              <%= item['inherit'].html_safe %>
+            <% end %>
+            <% unless item['uri'].blank? %>
+              <a href="<%= app_prefix(item['uri']) %>">
+              <% end %>
+              <%= item['title'] %>
+              <% unless item['uri'].blank? %>
+              </a>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
   <% else %>
     <ul class="present_list <%= list_clss %>">
       <% list.each do |item| %>
-       <li>
-         <% if list_clss == 'subjects_list' && item['jsonmodel_type'].start_with?('agent_') %>
-           <a href="<%= app_prefix(item['uri']) %>">
-             <%= item['title'] %>
-           </a>
-           <% if item['_relator'] %>
-             (<%= t("enumerations.linked_agent_archival_record_relators.#{item['_relator']}", :default => item['_relator'])  %>)
-           <% end %>
-           <%= item['_terms'].map{|t| " -- #{t['term']}"}.join %>
-         <% else %>
-         <% if item.kind_of? Hash %>
-          <% unless item['uri'].blank? %>
-           <a href="<%= app_prefix(item['uri']) %>">
-          <% end %>
-          <%= item['title'] %>
-          <% unless item['uri'].blank? %>
-           </a>
-          <% end %>
-         <% else %>
-           <%= item %>
-         <% end %>
-         <% end %>
-       </li>
+        <li>
+          <% if list_clss == 'subjects_list' && item['jsonmodel_type'].start_with?('agent_') %>
+            <a href="<%= app_prefix(item['uri']) %>">
+              <%# added the gsub part to deal with name/title agents.  remove if we ever find a proper fix for those headings. %>
+                <%= item['title'].gsub(/\$\w:\s/, '') %>
+              </a>
+              <% if item['_relator'] %>
+                (<%= t("enumerations.linked_agent_archival_record_relators.#{item['_relator']}", :default => item['_relator']) %>)
+              <% end %>
+              <%= item['_terms'].map{|t| " -- #{t['term']}"}.join %>
+
+              <%# added the gsub part to deal with name/title agents.  remove if we ever find a proper fix for those headings. %>
+                <% elsif list_clss == 'other_names' %>
+                  <%= item.gsub(/\$\w:\s/, '') %>
+                <% else %>
+                  <% if item.kind_of? Hash %>
+                    <% unless item['uri'].blank? %>
+                      <a href="<%= app_prefix(item['uri']) %>">
+                      <% end %>
+                      <%= item['title'] %>
+                      <% unless item['uri'].blank? %>
+                      </a>
+                    <% end %>
+                  <% else %>
+                    <%= item %>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
       <% end %>
-    </ul>
-   <% end %>
-<% end %>
